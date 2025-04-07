@@ -5,6 +5,7 @@ import { App } from './App';
 import { HomePage } from './pages/HomePage';
 import { PeoplePage } from './pages/PeoplePage';
 import { RedirectToHomePage } from './pages/RedirectToHomePage';
+import { NotFoundPage } from './pages/NotFoundPage';
 
 export const Root = () => (
   <>
@@ -15,8 +16,7 @@ export const Root = () => (
         <Route path="home" element={<RedirectToHomePage />} />
         <Route path="people" element={<PeoplePage />} />
       </Route>
-
-      <Route path='*' element={''}></Route>
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   </>
 );

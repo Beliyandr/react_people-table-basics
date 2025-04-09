@@ -12,12 +12,35 @@ export const PeoplePage = () => {
   useEffect(() => {
     setLoading(true);
     getPeople()
-      .then(setPeople)
+      .then(person => setPeople(makeFullPeopleInfo(person)))
       .catch(() => setError('Something went wrong'))
       .finally(() => {
         setLoading(false);
       });
   }, []);
+
+  function makeFullPeopleInfo(people: Person[]) {
+    const convertedPeopleObjects = people.reduce<Record<string, Person>>((acc, person) => {
+      return {
+        ...acc,
+        [person.name]: person,
+      };
+    }, {});
+
+    return people.map(person => {
+      return {
+        ...person,
+        mother: person.motherName
+          ? convertedPeopleObjects[person.motherName]
+          : null,
+        father: person.fatherName
+          ? convertedPeopleObjects[person.fatherName]
+          : null,
+      };
+    });
+  }
+
+  console.log(people);
 
   return (
     <>

@@ -9,18 +9,8 @@ export const PeoplePage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    setLoading(true);
-    getPeople()
-      .then(person => setPeople(makeFullPeopleInfo(person)))
-      .catch(() => setError('Something went wrong'))
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
-
-  function makeFullPeopleInfo(people: Person[]) {
-    const convertedPeopleObjects = people.reduce<Record<string, Person>>(
+  const makeFullPeopleInfo = (peopleParams: Person[]) => {
+    const convertedPeopleObjects = peopleParams.reduce<Record<string, Person>>(
       (acc, person) => {
         return {
           ...acc,
@@ -30,7 +20,7 @@ export const PeoplePage = () => {
       {},
     );
 
-    return people.map(person => {
+    return peopleParams.map(person => {
       return {
         ...person,
         mother: person.motherName
@@ -41,7 +31,17 @@ export const PeoplePage = () => {
           : null,
       };
     });
-  }
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    getPeople()
+      .then(person => setPeople(makeFullPeopleInfo(person)))
+      .catch(() => setError('Something went wrong'))
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <>

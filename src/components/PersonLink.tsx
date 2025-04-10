@@ -5,18 +5,16 @@ import classNames from 'classnames';
 
 type Props = {
   person: Person;
-  getSlug: (name: string | null) => Person | undefined | null;
 };
-export const PersonLink: FC<Props> = ({ person, getSlug = () => {} }) => {
-  const { slug } = useParams();
-  const motherSlug = getSlug(person.motherName);
-  const fatherSlug = getSlug(person.fatherName);
+export const PersonLink: FC<Props> = ({ person }) => {
+  const { slugParam } = useParams();
+  const { slug, motherName, mother, fatherName, father } = person;
 
   return (
     <tr
       data-cy="person"
       key={person.slug}
-      className={classNames({ 'has-background-warning': person.slug === slug })}
+      className={classNames({ 'has-background-warning': slug === slugParam })}
     >
       <td>
         <Link
@@ -30,20 +28,21 @@ export const PersonLink: FC<Props> = ({ person, getSlug = () => {} }) => {
       <td>{person.sex}</td>
       <td>{person.born}</td>
       <td>{person.died}</td>
+
       <td>
-        {motherSlug ? (
-          <Link to={motherSlug.slug} className="has-text-danger">
-            {person.motherName}
+        {mother?.slug ? (
+          <Link to={mother.slug} className="has-text-danger">
+            {motherName}
           </Link>
         ) : (
-          person.motherName || '-'
+          motherName || '-'
         )}
       </td>
       <td>
-        {fatherSlug ? (
-          <Link to={fatherSlug.slug}>{person.fatherName}</Link>
+        {father?.slug ? (
+          <Link to={father.slug}>{fatherName}</Link>
         ) : (
-          person?.fatherName || '-'
+          person.fatherName || '-'
         )}
       </td>
     </tr>

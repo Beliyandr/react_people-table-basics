@@ -20,12 +20,15 @@ export const PeoplePage = () => {
   }, []);
 
   function makeFullPeopleInfo(people: Person[]) {
-    const convertedPeopleObjects = people.reduce<Record<string, Person>>((acc, person) => {
-      return {
-        ...acc,
-        [person.name]: person,
-      };
-    }, {});
+    const convertedPeopleObjects = people.reduce<Record<string, Person>>(
+      (acc, person) => {
+        return {
+          ...acc,
+          [person.name]: person,
+        };
+      },
+      {},
+    );
 
     return people.map(person => {
       return {
@@ -39,8 +42,6 @@ export const PeoplePage = () => {
       };
     });
   }
-
-  console.log(people);
 
   return (
     <>

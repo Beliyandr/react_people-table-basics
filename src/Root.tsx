@@ -12,7 +12,7 @@ export const Root = () => (
         <Route index element={<HomePage />} />
         <Route path="home" element={<RedirectToHomePage />} />
         <Route path="people" element={<PeoplePage />}>
-          <Route path=":slug"  />
+          <Route path=":slugParam" element={<PeoplePage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Route>

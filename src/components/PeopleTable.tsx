@@ -6,14 +6,6 @@ type Props = {
 };
 
 export const PeopleTable: FC<Props> = ({ people }) => {
-  const getSlug = (name: string | null) => {
-    if (!name) {
-      return null;
-    }
-
-    return people.find(person => person.name === name);
-  };
-
   return (
     <table
       data-cy="peopleTable"
@@ -32,7 +24,7 @@ export const PeopleTable: FC<Props> = ({ people }) => {
 
       <tbody>
         {people.map(person => (
-          <PersonLink person={person} getSlug={getSlug} key={person.slug} />
+          <PersonLink person={person} key={person.slug} />
         ))}
       </tbody>
     </table>
